@@ -18,10 +18,6 @@
     <%= collection_select(:student, :option_id, @groups, :id, :name, {}, {:size => 9}) %> <br />
   </p>
   <p>
-    <%= f.label :option_id, "Committee" %><br />
-    <%= collection_select(:student, :option_id, @committees, :id, :name, {}, {:size => 9}) %> <br />
-  </p>
-  <p>
     <%= f.label :password %>
     <%= password_field(:student, :password, :size => 20) %>
 

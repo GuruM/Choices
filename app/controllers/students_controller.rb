@@ -87,7 +87,7 @@ class StudentsController < ApplicationController
   
 
 def admin
-  @students = Student.find(:all) 
+  @students = Student.find(:all)
   @added = Student.find(:all, :order => "created_at DESC", :limit => 10)
   @updated = Student.find(:all, :order => "updated_at DESC", :limit => 10)
 end
@@ -96,12 +96,17 @@ def admin_all
   @students = Student.find(:all, :order => "id DESC")
   
   @options = Option.all
-  
+  @op = Option.new
   @options.each do |option|
       Option.update_counters option.id, :students_count => -option.students_count
       Option.update_counters option.id, :students_count => option.students.length
   end
 end
+
+def update_options
+
+end
+
 
 def su_edit
     @student = Student.find(params[:id])

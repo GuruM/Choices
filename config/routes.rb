@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   #map.resources :identities
 
-  #map.resources :options
+  map.resources :options
 
   map.resources :students
   

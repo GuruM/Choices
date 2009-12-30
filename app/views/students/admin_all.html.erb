@@ -1,10 +1,28 @@
 <div class="column">
 <dl>
-<dt>All</dt>
+<dt>Options</dt>
 <% @students.each do |s| %>
   <dd <%= "class=\"verified\"" if s.verified %>>
     <%= link_to s.name, :action=>"su_edit", :id => s%> <%= link_to 'X', s, :confirm => 'Are you sure?', :method => :delete%>
   </dd>
 <% end %>
+<h2>New Option</h2>
+	<% form_for(@op, :url => { :controller => :options, :action => :create}, :method => :put) do |f| %>
+		<%= f.text_field :name %>
+		<%= f.submit 'New Option Name' %>
+	<% end %>
+	
+<h2>Current Options</h2>
+<% @options.each do |o| %>
+    <%= o.name %> <%= link_to "[X]", o, :confirm => 'Are you sure?', :method => :delete%>
+	<% form_for( o, :url => { :controller => :options, :action => :update, :id => o}, :method => :put) do |f| %>
+		<%= f.text_field :name %>
+		<%= f.submit 'Update Option Name' %>
+	<% end %>
+	<br/>
+<% end %>
+</dl>
+<dl>
+<dt>Students</dt>
 </dl>
 </div>
