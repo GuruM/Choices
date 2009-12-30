@@ -1,7 +1,7 @@
 
 class StudentsController < ApplicationController
 
-  before_filter :authenticate, :only => [:admin, :admin_all, :destroy, :su_edit]
+  before_filter :authenticate, :only => [:admin, :admin_all, :destroy, :su_edit, :admin_update]
   
   # GET /students
   # GET /students.xml
@@ -58,7 +58,7 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @student.save
         flash[:notice] = 'Student was successfully created.'
-        format.html { redirect_to(students_url) }
+        format.html { redirect_to(:controller=>"students",:action => "admin_all")  }
         format.xml  { render :xml => @student, :status => :created, :location => @student }
       else
         format.html { render :action => "new" }
@@ -85,6 +85,22 @@ class StudentsController < ApplicationController
     end
   end
   
+  
+    def admin_update
+    @student = Student.find(params[:id])
+
+    respond_to do |format|
+      if (@student.update_attributes(params[:student]))
+          flash[:notice] = 'Student was successfully updated.'
+          format.html { redirect_to(:controller=>"students",:action => "admin_all") }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = 'Failed.'
+          format.html { redirect_to(edit_student_path(@student)) }
+          format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
+        end
+    end
+  end
 
 def admin
   @students = Student.find(:all)
@@ -94,7 +110,7 @@ end
 
 def admin_all
   @students = Student.find(:all, :order => "id DESC")
-  
+  @st = Student.new
   @options = Option.all
   @op = Option.new
   @options.each do |option|

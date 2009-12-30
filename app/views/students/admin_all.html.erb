@@ -1,12 +1,7 @@
 <div class="column">
 <dl>
 <dt>Options</dt>
-<% @students.each do |s| %>
-  <dd <%= "class=\"verified\"" if s.verified %>>
-    <%= link_to s.name, :action=>"su_edit", :id => s%> <%= link_to 'X', s, :confirm => 'Are you sure?', :method => :delete%>
-  </dd>
-<% end %>
-<h2>New Option</h2>
+<h2>Create Option</h2>
 	<% form_for(@op, :url => { :controller => :options, :action => :create}, :method => :put) do |f| %>
 		<%= f.text_field :name %>
 		<%= f.submit 'New Option Name' %>
@@ -22,7 +17,31 @@
 	<br/>
 <% end %>
 </dl>
+
 <dl>
 <dt>Students</dt>
+<h2>Recently Added Students</h2>
+<% @students.each do |s| %>
+  <dd <%= "class=\"verified\"" if s.verified %>>
+    <%= link_to s.name, :action=>"su_edit", :id => s%> <%= link_to 'X', s, :confirm => 'Are you sure?', :method => :delete%>
+  </dd>
+<% end %>
+
+<h2>Create Student</h2>
+	<% form_for(@st, :url => { :controller => :students, :action => :create}, :method => :put) do |f| %>
+		<%= f.text_field :name %>
+		<%= f.submit 'New Student' %>
+	<% end %>
+	
+<h2>Current Students</h2>
+<% @students.each do |t| %>
+    <%= t.name %> <%= link_to "[X]", t, :confirm => 'Are you sure?', :method => :delete%>
+	<% form_for( t, :url => { :controller => :students, :action => :admin_update, :id => t}, :method => :put) do |f| %>
+		<%= f.text_field :name %>
+		<%= f.submit 'Update Student' %>
+	<% end %>
+	<br/>
+<% end %>
+
 </dl>
 </div>
