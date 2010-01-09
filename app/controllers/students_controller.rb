@@ -31,7 +31,7 @@ class StudentsController < ApplicationController
     @students = Student.find(:all, :conditions => "option_id = 36")
     @student.password = "";
 
-    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0")
+    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND id <> 36")
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
 
   
@@ -54,7 +54,7 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:id])
     @student.password = "";
 
-    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0")
+    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND id <> 36")
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
 
   end
@@ -81,6 +81,24 @@ class StudentsController < ApplicationController
   # PUT /students/1
   # PUT /students/1.xml
   def update
+	flash[:error] =""
+	if params[:student][:id].blank?
+		flash[:error] += '*** Pick yourself from the list of formal names! '
+	end
+	if params[:student][:nickname].blank?
+		flash[:error] += '*** Set your friendly name! '
+	end
+	if params[:student][:password].blank?
+		flash[:error] += '*** Set your password! '
+	end
+	if params[:student][:option_id].blank?
+		flash[:error] += '*** Select your option! There is an "Undecided" option if you\'re undecided. '
+	end
+	if !(flash[:error].blank?)
+		redirect_to (:controller=>"students",:action=>"new")
+		return
+	end
+  
 	if params[:student][:id].blank?
 		@student = Student.find(params[:id]) #this block of code seems ... wrong
 	else

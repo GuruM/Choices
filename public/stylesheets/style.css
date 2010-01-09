@@ -69,6 +69,13 @@ h1 {
 	margin: 0 0 -15px 0;
   }
 
+.error {
+  color: red;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+  
+  
 .instruction {
   position: absolute;
   top: 1.25em;

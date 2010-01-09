@@ -1,12 +1,13 @@
 <h1>Add Yourself!</h1>
 <% form_for(@student, :url => { :controller => :students, :action => :update }) do |f| %>
-  <%= f.error_messages %>
+    <% if flash[:error] %>
+      <div class="error"><%= flash[:error] %></div>
+    <% end %>
 
   <p>
     <%= f.label :name, "Formal Name (pick yourself from this list!)" %><br />
     <%= collection_select(:student, :id, @students, :id, :name, {}, {:size => 10}) %> <br />
   </p>
-
   <p>
     <%= f.label 'Friendly Name (what people know you as)' %>
 	-- Add your last name initial for clarity, like "Jon S" for "Smith, Jonathan". <br />
@@ -18,7 +19,7 @@
   </p>
   <p>
     <%= f.label :option_id, "Option" %><br />
-    <%= collection_select(:student, :option_id, @groups, :id, :name, {}, {:size => 10}) %> <br />
+    <%= collection_select(:student, :option_id, @groups, :id, :name, {}, {:size => 9}) %> <br />
   </p>
   <p>
     <%= f.label :password %>
@@ -36,7 +37,7 @@
 
 
 
-<!--><%= render :partial => "form" %><-->
+<!-- <%= render :partial => "form" %> -->
 
 
 
