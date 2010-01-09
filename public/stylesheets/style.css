@@ -64,8 +64,8 @@ h1 {
   	width: 60%;
   	line-height: 65px;    
 	height: 100px;
-	text-indent: 125px;
-	background: url(/images/minilogo.png) no-repeat;
+	/*text-indent: 125px;
+	background: url(/images/minilogo.png) no-repeat;*/
 	margin: 0 0 -15px 0;
   }
 

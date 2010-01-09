@@ -1,5 +1,42 @@
 <h1>Add Yourself!</h1>
-<%= render :partial => "form" %>
+<% form_for(@student, :url => { :controller => :students, :action => :update }) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name, "Formal Name (pick yourself from this list!)" %><br />
+    <%= collection_select(:student, :id, @students, :id, :name, {}, {:size => 10}) %> <br />
+  </p>
+
+  <p>
+    <%= f.label 'Friendly Name (what people know you as)' %>
+	-- Add your last name initial for clarity, like "Jon S" for "Smith, Jonathan". <br />
+    <%= f.text_field :nickname %>
+  </p>
+    <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :option_id, "Option" %><br />
+    <%= collection_select(:student, :option_id, @groups, :id, :name, {}, {:size => 10}) %> <br />
+  </p>
+  <p>
+    <%= f.label :password %>
+    <%= password_field(:student, :password, :size => 20) %>
+
+  </p>
+  
+  <p>
+  <%= f.submit "Go!" %> | <%= link_to 'Cancel', students_path %>
+  </p>
+
+  <p class="message">Passwords protect from vandalism. Use a simple memorable password (ex. 123)<br />
+  (Press Go! only once!)</p>
+<% end %>
+
+
+
+<!--><%= render :partial => "form" %><-->
 
 
 

@@ -1,7 +1,7 @@
 <h1>Unofficial EngSci Option Choice List</h1>
 
 <div class="instruction">
-  <em><%= @students_count %>/<small>160</small> EngScis so far... </em>
+  <em><%= @students_count %>/<small>181</small> EngScis so far... </em>
   <%= link_to 'Add Yourself!', new_student_path %> <br/>
 </div>
 
@@ -32,7 +32,11 @@
 	  <dt><%= link_to option.name, :action=>"new", :id=>option.id %></dt>
 	  <% option.students.each do |student| %>
 	    <dd<%= " class=\"special\"" if student.special %>>
-	      <%= link_to student.name, edit_student_path(student)%><% ", "+student.year if student.year %>
+		  <% if student.nickname.blank? %>
+			<%= link_to student.name, edit_student_path(student)%><% ", "+student.year if student.year %>
+		  <% else %>
+			<%= link_to student.nickname, edit_student_path(student)%><% ", "+student.year if student.year %>
+		  <% end %>		  
 	        <% if student.created_at > 3.hours.ago || @recent_students.include?(student) %>
 	           <%= "<em>New!</em>" %>
 	        <% elsif student.updated_at > 5.hours.ago %>

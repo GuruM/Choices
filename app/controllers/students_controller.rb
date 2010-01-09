@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
     
     @students = Student.find(:all)
-    @students_count = @students.length
+    @students_count = Student.find(:all, :conditions=> "option_id <> 36").length
     @recent_students = Student.find(:all, :order => "created_at DESC", :limit => 5)
 
     respond_to do |format|
@@ -28,16 +28,25 @@ class StudentsController < ApplicationController
   # GET /students/new.xml
   def new
     @student = Student.new
-    @student.option_id = params[:id] if params[:id]
-    
+    @students = Student.find(:all, :conditions => "option_id = 36")
+    @student.password = "";
+
     @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0")
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
 
+  
+  #	@student = Student.new
+#	@students = Student.find(:all, :order => "name ASC", :conditions=>"option_id IS NULL")
+    # @student.option_id = params[:id] if params[:id]
+    
+ #   @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND name != 'Missing'")
+ #   @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @student }
-    end
+
+#    respond_to do |format|
+#      format.html # new.html.erb
+#      format.xml  { render :xml => @student }
+#    end 
   end
 
   # GET /students/1/edit
@@ -54,7 +63,8 @@ class StudentsController < ApplicationController
   # POST /students.xml
   def create
     @student = Student.new(params[:student])
-
+	@student.option_id = 36 #assign to Missing
+	
     respond_to do |format|
       if @student.save
         flash[:notice] = 'Student was successfully created.'
@@ -67,11 +77,22 @@ class StudentsController < ApplicationController
     end
   end
 
+
   # PUT /students/1
   # PUT /students/1.xml
   def update
-    @student = Student.find(params[:id])
-
+	if params[:student][:id].blank?
+		@student = Student.find(params[:id]) #this block of code seems ... wrong
+	else
+		@student = Student.find(params[:student][:id]) #this block of code seems ... wrong
+	end
+	@student.email = params[:student][:email]
+	@student.nickname = params[:student][:nickname]
+	if @student.password.blank?
+		@student.password = params[:student][:password]
+	end
+	@student.option_id = params[:student][:option_id]
+	
     respond_to do |format|
       if (params[:student][:password] && (@student.password == params[:student][:password]) && @student.update_attributes(params[:student]))
           flash[:notice] = 'Student was successfully updated.'
