@@ -14,6 +14,12 @@ class StudentsController < ApplicationController
     @students_count = Student.find(:all, :conditions=> "option_id <> 10").length
     @recent_students = Student.find(:all, :order => "created_at DESC", :limit => 5)
 
+	Option.all.each do |option|
+      Option.update_counters option.id, :students_count => -option.students_count
+      Option.update_counters option.id, :students_count => option.students.length
+    end
+
+	
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @students }
@@ -28,7 +34,7 @@ class StudentsController < ApplicationController
   # GET /students/new.xml
   def new
     @student = Student.new
-    @students = Student.find(:all, :conditions => "option_id = 10")
+    @students = Student.find(:all,:order => "name ASC", :conditions => "option_id = 10")
     @student.password = "";
 
     @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND id <> 10")
@@ -82,7 +88,7 @@ class StudentsController < ApplicationController
   # PUT /students/1.xml
   def update
 	flash[:error] =""
-	if params[:student][:id].blank?
+	if params[:student][:id].blank? && params[:id].blank?
 		flash[:error] += '*** Pick yourself from the list of formal names! '
 	end
 	if params[:student][:nickname].blank?
