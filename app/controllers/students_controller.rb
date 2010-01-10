@@ -31,7 +31,7 @@ class StudentsController < ApplicationController
     @students = Student.find(:all, :conditions => "option_id = 10")
     @student.password = "";
 
-    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND name <> Missing")
+    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND id <> 10")
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
 
   
