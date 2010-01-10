@@ -39,7 +39,7 @@
 		  <% end %>		  
 	        <% if student.created_at > 3.hours.ago || @recent_students.include?(student) %>
 	           <%= "<em>New!</em>" %>
-	        <% if student.updated_at > 5.hours.ago %>
+	        <% elsif student.updated_at > 5.hours.ago %>
 	           <%= "<em>Updated!</em>" %>
 	       <% end %> 
 	    </dd>
