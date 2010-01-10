@@ -29,7 +29,7 @@
 	
 	<dl>
 	  <div class="prediction"><%= option.students_count %></div>
-	  <dt>option.name </dt>
+	  <dt><%= option.name %></dt>
 	  <% option.students.each do |student| %>
 	    <dd<%= " class=\"special\"" if student.special %>>
 		  <% if student.nickname.blank? %>
