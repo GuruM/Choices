@@ -95,7 +95,7 @@ class StudentsController < ApplicationController
 		flash[:error] += '*** Select your option! There is an "Undecided" option if you\'re undecided. '
 	end
 	if !(flash[:error].blank?)
-		redirect_to (:controller=>"students",:action=>"new")
+		redirect_to(:controller=>"students",:action=>"new")
 		return
 	end
   
