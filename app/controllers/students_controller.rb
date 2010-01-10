@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
     
     @students = Student.find(:all)
-    @students_count = Student.find(:all, :conditions=> "option_id <> 36").length
+    @students_count = Student.find(:all, :conditions=> "option_id <> 10").length
     @recent_students = Student.find(:all, :order => "created_at DESC", :limit => 5)
 
     respond_to do |format|
@@ -28,10 +28,10 @@ class StudentsController < ApplicationController
   # GET /students/new.xml
   def new
     @student = Student.new
-    @students = Student.find(:all, :conditions => "option_id = 36")
+    @students = Student.find(:all, :conditions => "option_id = 10")
     @student.password = "";
 
-    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND id <> 36")
+    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND name <> Missing")
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
 
   
@@ -54,7 +54,7 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:id])
     @student.password = "";
 
-    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND id <> 36")
+    @groups = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 0 AND id <> 10")
     @committees = Option.find(:all, :order => "id ASC", :conditions=> "option_type = 1")
 
   end
@@ -63,7 +63,7 @@ class StudentsController < ApplicationController
   # POST /students.xml
   def create
     @student = Student.new(params[:student])
-	@student.option_id = 36 #assign to Missing
+	@student.option_id = 10 #assign to Missing
 	
     respond_to do |format|
       if @student.save
