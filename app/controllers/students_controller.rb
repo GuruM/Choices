@@ -71,7 +71,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to(:controller=>"students",:action => "admin_all")  }
         format.xml  { render :xml => @student, :status => :created, :location => @student }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "index" }
         format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
       end
     end
