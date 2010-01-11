@@ -17,7 +17,7 @@
 	
 	<% @students_count = 0
 	   parent.each do |o| @students_count += o.students_count end %>
-	<% @max_height = (@students_count+3*parent.length) / 5 %>
+	<% @max_height = (@students_count+2*parent.length) / 5 %>
 	  
 <% parent.each do |option| %>
 	<% @height += option.students_count + 3 %>
