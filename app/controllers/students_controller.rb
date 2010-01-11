@@ -118,7 +118,7 @@ class StudentsController < ApplicationController
 	@student.option_id = params[:student][:option_id]
 	
     respond_to do |format|
-      if (params[:student][:password] && (@student.password == params[:student][:password]) && @student.update_attributes(params[:student]))
+      if (params[:student][:name].blank? && params[:student][:password] && (@student.password == params[:student][:password]) && @student.update_attributes(params[:student]))
           flash[:notice] = 'Student was successfully updated.'
           format.html { redirect_to(students_url) }
           format.xml  { head :ok }
