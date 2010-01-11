@@ -17,7 +17,7 @@
 	
 	<% @students_count = 0
 	   parent.each do |o| @students_count += o.students_count end %>
-	<% @max_height = (@students_count+3*parent.length) / 5 + 2 %>
+	<% @max_height = (@students_count+3*parent.length) / 5 %>
 	  
 <% parent.each do |option| %>
 	<% @height += option.students_count + 3 %>
@@ -33,9 +33,9 @@
 	  <% option.students.each do |student| %>
 	    <dd<%= " class=\"special\"" if student.special %>>
 		  <% if student.nickname.blank? %>
-			<%= link_to student.name, edit_student_path(student)%><% ", "+student.year if student.year %>
+			<%= link_to sanitize(student.name), edit_student_path(student)%><% ", "+student.year if student.year %>
 		  <% else %>
-			<%= link_to student.nickname, edit_student_path(student)%><% ", "+student.year if student.year %>
+			<%= link_to sanitize(student.nickname), edit_student_path(student)%><% ", "+student.year if student.year %>
 		  <% end %>		  
 	        <% if student.created_at > 3.hours.ago %>
 	           <%= "<em>New!</em>" %>
