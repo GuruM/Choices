@@ -118,15 +118,21 @@ class StudentsController < ApplicationController
 	@student.option_id = params[:student][:option_id]
 	
     respond_to do |format|
-      if (params[:student][:name].blank? && params[:student][:password] && (@student.password == params[:student][:password]) && @student.update_attributes(params[:student]))
-          flash[:notice] = 'Student was successfully updated.'
-          format.html { redirect_to(students_url) }
-          format.xml  { head :ok }
-        else
-          flash[:notice] = 'Incorrect Password. Try Again.'
-          format.html { redirect_to(edit_student_path(@student)) }
-          format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
-        end
+      if (params[:student][:name].blank? && params[:student][:password] && (@student.password == params[:student][:password]))
+		if (@student.update_attributes(params[:student]))
+			flash[:error] = 'Student was successfully updated.'
+			format.html { redirect_to(students_url) }
+			format.xml  { head :ok }
+		else
+			flash[:error] = 'Friendly name is invalid. Only letters and spaces please! Try Again.'
+			format.html { redirect_to(edit_student_path(@student)) }
+			format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
+		end
+      else
+        flash[:error] = 'Incorrect Password. Try Again.'
+        format.html { redirect_to(edit_student_path(@student)) }
+        format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
+      end
     end
   end
   
