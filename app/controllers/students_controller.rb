@@ -1,7 +1,7 @@
 
 class StudentsController < ApplicationController
 
-  before_filter :authenticate, :only => [:admin, :admin_all, :destroy, :su_edit, :admin_update]
+  before_filter :authenticate, :only => [:admin, :admin_all, :destroy, :su_edit, :admin_update, :admin_clear]
   
   # GET /students
   # GET /students.xml
@@ -70,6 +70,7 @@ class StudentsController < ApplicationController
   def create
     @student = Student.new(params[:student])
 	@student.option_id = 10 #assign to Missing
+	@student.nickname = @student.name
 	
     respond_to do |format|
       if @student.save
@@ -137,7 +138,7 @@ class StudentsController < ApplicationController
   end
   
   
-    def admin_update
+  def admin_update
     @student = Student.find(params[:id])
 
     respond_to do |format|
@@ -153,6 +154,29 @@ class StudentsController < ApplicationController
     end
   end
 
+  def admin_clear
+    @student = Student.find(params[:id])
+
+    @student_new = Student.new
+	@student_new.name = @student.name
+	@student_new.option_id = 10 #assign to Missing
+	@student_new.nickname = @student_new.name
+	
+    @student.destroy
+    respond_to do |format|
+      if @student_new.save
+        flash[:notice] = 'Student was successfully clear.'
+        format.html { redirect_to(:controller=>"students",:action => "admin_all")  }
+        format.xml  { render :xml => @student, :status => :created, :location => @student }
+      else
+        format.html { render :action => "index" }
+        format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
+      end
+    end
+
+  end
+  
+  
 def admin
   @students = Student.find(:all)
   @added = Student.find(:all, :order => "created_at DESC", :limit => 10)

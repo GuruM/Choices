@@ -19,8 +19,11 @@
 <% @students.each do |t| %>
 	<% form_for( t, :url => { :controller => :students, :action => :admin_update, :id => t}, :method => :put) do |f| %>
 		<%= f.text_field :name %> <%= link_to "[X]", t, :confirm => 'Are you sure?', :method => :delete%>
-		<%= f.text_field :nickname %>
+		<%= f.text_field :option_id %><%= f.text_field :password %>
 		<%= f.submit 'Update Student' %>
+	<% end %>
+	<% form_for( t, :url => { :controller => :students, :action => :admin_clear, :id => t}, :method => :put) do |f| %>
+		<%= f.submit 'Clear' %>
 	<% end %>
 	<br/>
 <% end %>
