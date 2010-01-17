@@ -4,13 +4,17 @@
     <% if flash[:error] %>
       <div class="error"><%= flash[:error] %></div>
     <% end %>
-
+  <p style="color:red;">
+	PLEASE do not vandalise. Vandalism will only appear on the website for a few hours, and I have to work to remove it. It's a really tedious process.
+	<br/>
+	Thanks for understanding, this application only works on trust.
+  </p>
   <p>
     <%= f.label 'Friendly Name (what people know you as)' %>
 	-- Add your last name initial for clarity, like "Jon S" for "Smith, Jonathan". <br />
     <%= f.text_field :nickname %>
   </p>
-    <p>
+  <p>
     <%= f.label "email, this is optional" %><br />
     <%= f.text_field :email %>
   </p>
