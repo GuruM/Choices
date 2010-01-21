@@ -14,6 +14,8 @@ class StudentsController < ApplicationController
     @students_count = Student.find(:all, :conditions=> "option_id <> 10").length
     @recent_students = Student.find(:all, :order => "created_at DESC", :limit => 5)
 
+	@ip = getIP()
+	
 	Option.all.each do |option|
       Option.update_counters option.id, :students_count => -option.students_count
       Option.update_counters option.id, :students_count => option.students.length
