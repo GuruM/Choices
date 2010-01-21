@@ -14,7 +14,6 @@ class StudentsController < ApplicationController
     @students_count = Student.find(:all, :conditions=> "option_id <> 10").length
     @recent_students = Student.find(:all, :order => "created_at DESC", :limit => 5)
 
-	@ip = getIP()
 	
 	Option.all.each do |option|
       Option.update_counters option.id, :students_count => -option.students_count
@@ -119,6 +118,7 @@ class StudentsController < ApplicationController
 		@student.password = params[:student][:password]
 	end
 	@student.option_id = params[:student][:option_id]
+	@student.IP = getIP()
 	
     respond_to do |format|
       if (params[:student][:name].blank? && params[:student][:password] && (@student.password == params[:student][:password]))
