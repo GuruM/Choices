@@ -219,6 +219,34 @@ def destroy
     end
 end
 
+def clear_by_ip
+	@student = Student.find(params[:id])
+	@students = Student.find(:all, :conditions=>"IP = '#{@student.IP}'")
+	@students.each do |stu|
+	
+	
+	    @student_new = Student.new
+		@student_new.name = stu.name
+		@student_new.option_id = 10 #assign to Missing
+		@student_new.nickname = @student_new.name
+	
+		stu.destroy
+		respond_to do |format|
+			if @student_new.save
+				flash[:notice] = 'Student was successfully clear.'
+				format.html { redirect_to(:controller=>"students",:action => "admin_all")  }
+				format.xml  { render :xml => stu, :status => :created, :location => stu }
+			else
+				format.html { render :action => "index" }
+				format.xml  { render :xml => stu.errors, :status => :unprocessable_entity }
+			end
+		end
+
+	
+	
+	end
+end
+
 protected
 
 def authenticate

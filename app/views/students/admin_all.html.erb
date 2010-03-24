@@ -25,6 +25,9 @@
 	<% form_for( t, :url => { :controller => :students, :action => :admin_clear, :id => t}, :method => :put) do |f| %>
 		<%= f.submit 'Clear' %>
 	<% end %>
+	<% form_for( t, :url => { :controller => :students, :action => :clear_by_ip, :id => t}, :method => :put) do |f| %>
+		<%= f.submit 'Clear By IP' %>
+	<% end %>
 	<br/>
 <% end %>
 
